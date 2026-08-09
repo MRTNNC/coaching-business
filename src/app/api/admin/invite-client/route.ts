@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
   const { data, error } = await admin.auth.admin.inviteUserByEmail(email, {
     data: { full_name: fullName ?? "" },
-    redirectTo: `${siteUrl}/portal/set-password`,
+    redirectTo: `${siteUrl}/auth/callback`,
   });
 
   if (error) {

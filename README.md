@@ -24,25 +24,16 @@ leaving feedback, and issuing workout/nutrition plans as downloadable PDFs.
    `checkin-photos` storage bucket, and a few starter pricing packages.
 4. **Auth → URL Configuration**: add your site URLs to the redirect allow
    list, e.g. `http://localhost:3000/**` and `https://your-app.vercel.app/**`.
-5. **Auth → Email Templates → Invite user**: replace the confirmation link
-   with one that routes through this app's own confirm handler, so invited
-   clients land on the "set your password" page:
-
-   ```html
-   <h2>You've been invited to start coaching</h2>
-   <p>
-     <a
-       href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=invite&next={{ .RedirectTo }}"
-       >Accept the invite and set your password</a
-     >
-   </p>
-   ```
-
-6. **Auth → Providers**: disable public sign-ups if you want client accounts
+   The default "Invite user" email template works as-is — no editing
+   needed. (Supabase gates raw-HTML template editing behind setting up
+   custom SMTP; the app is built to work with the default template instead,
+   via `src/app/auth/callback`, which picks the session up from the
+   redirect Supabase's own verification page performs.)
+5. **Auth → Providers**: disable public sign-ups if you want client accounts
    to be strictly admin-invited (Settings → Authentication → "Allow new
    users to sign up" off is optional; self-signup isn't exposed anywhere in
    the UI regardless).
-7. Create your own admin account:
+6. Create your own admin account:
    - Sign up once through Supabase (e.g. via the Supabase dashboard's
      **Authentication → Users → Add user**, or by temporarily hitting the
      app's sign-up flow if you add one) using your own email.
