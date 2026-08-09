@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { CommentForm } from "@/components/admin/CommentForm";
+import { CheckinDetail } from "@/components/CheckinDetail";
 import type {
   Checkin,
   CheckinPhoto,
@@ -118,97 +119,20 @@ export default async function ClientDetailPage({
       <div>
         <h2 className="text-lg font-medium">Check-ins</h2>
         <div className="mt-4 flex flex-col gap-6">
-          {(checkins ?? []).map((checkin) => {
-            const checkinPhotos = (photos ?? []).filter(
-              (p) => p.checkin_id === checkin.id,
-            );
-            const checkinComments = (comments ?? []).filter(
-              (c) => c.checkin_id === checkin.id,
-            );
-
-            return (
-              <div
-                key={checkin.id}
-                className="rounded-2xl border border-black/10 p-6 dark:border-white/15"
-              >
-                <div className="flex items-center justify-between">
-                  <p className="font-medium">
-                    {new Date(checkin.submitted_at).toLocaleDateString()}
-                  </p>
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-medium ${
-                      checkin.status === "reviewed"
-                        ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300"
-                        : "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300"
-                    }`}
-                  >
-                    {checkin.status === "reviewed"
-                      ? "Reviewed"
-                      : "Awaiting review"}
-                  </span>
-                </div>
-
-                <dl className="mt-4 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
-                  <div>
-                    <dt className="text-foreground/60">Weight</dt>
-                    <dd>{checkin.weight ?? "—"}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-foreground/60">Energy</dt>
-                    <dd>{checkin.energy_rating ?? "—"}/5</dd>
-                  </div>
-                  <div>
-                    <dt className="text-foreground/60">Sleep</dt>
-                    <dd>{checkin.sleep_rating ?? "—"}/5</dd>
-                  </div>
-                  <div>
-                    <dt className="text-foreground/60">Adherence</dt>
-                    <dd>{checkin.adherence_rating ?? "—"}/5</dd>
-                  </div>
-                </dl>
-
-                {checkin.notes && (
-                  <p className="mt-4 text-sm text-foreground/80">
-                    {checkin.notes}
-                  </p>
-                )}
-
-                {checkinPhotos.length > 0 && (
-                  <div className="mt-4 flex gap-3">
-                    {checkinPhotos.map((photo) => {
-                      const url = signedPhotoUrls.get(photo.id);
-                      return url ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          key={photo.id}
-                          src={url}
-                          alt={`${photo.angle} progress photo`}
-                          className="h-24 w-24 rounded-lg object-cover"
-                        />
-                      ) : null;
-                    })}
-                  </div>
-                )}
-
-                {checkinComments.length > 0 && (
-                  <div className="mt-4 border-t border-black/10 pt-4 dark:border-white/10">
-                    <p className="text-xs font-medium text-foreground/60">
-                      Feedback
-                    </p>
-                    <ul className="mt-2 flex flex-col gap-2">
-                      {checkinComments.map((comment) => (
-                        <li key={comment.id} className="text-sm">
-                          {comment.body}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                <CommentForm checkinId={checkin.id} />
-              </div>
-            );
-          })}
+          {(checkins ?? []).map((checkin) => (
+            <CheckinDetail
+              key={checkin.id}
+              checkin={checkin}
+              photos={(photos ?? []).filter(
+                (p) => p.checkin_id === checkin.id,
+              )}
+              photoUrls={signedPhotoUrls}
+              comments={(comments ?? []).filter(
+                (c) => c.checkin_id === checkin.id,
+              )}
+              footer={<CommentForm checkinId={checkin.id} />}
+            />
+          ))}
 
           {(!checkins || checkins.length === 0) && (
             <p className="text-sm text-foreground/60">No check-ins yet.</p>

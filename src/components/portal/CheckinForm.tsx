@@ -3,21 +3,61 @@
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { createClient } from "@/lib/supabase/client";
-import type { PhotoAngle } from "@/lib/types";
+import {
+  ALL_CHECKIN_FIELDS,
+  CLOSING_FIELDS,
+  DAYS,
+  GENERAL_FIELDS,
+  NUTRITION_FIELDS,
+  TRAINING_FIELDS,
+  type CheckinFieldConfig,
+} from "@/lib/checkinFields";
+import type { CheckinResponses, DailyLogEntry, PhotoAngle } from "@/lib/types";
 
-const angles: PhotoAngle[] = ["front", "side", "back"];
-const ratingOptions = [1, 2, 3, 4, 5];
+const photoAngles: PhotoAngle[] = ["front", "side", "back"];
+
+const inputClass =
+  "mt-1 w-full rounded-lg border border-black/15 px-3 py-2 text-sm dark:border-white/20 dark:bg-transparent";
+
+function emptyResponses(): CheckinResponses {
+  return Object.fromEntries(
+    ALL_CHECKIN_FIELDS.map((field) => [field.key, ""]),
+  ) as unknown as CheckinResponses;
+}
+
+function emptyDailyLog(): DailyLogEntry[] {
+  return DAYS.map((day) => ({ day, weight: "", steps: "", hydration: "" }));
+}
 
 export function CheckinForm() {
   const router = useRouter();
-  const [weight, setWeight] = useState("");
-  const [energy, setEnergy] = useState("3");
-  const [sleep, setSleep] = useState("3");
-  const [adherence, setAdherence] = useState("3");
-  const [notes, setNotes] = useState("");
+  const [weekStart, setWeekStart] = useState("");
+  const [dailyLog, setDailyLog] = useState<DailyLogEntry[]>(emptyDailyLog());
+  const [waistCm, setWaistCm] = useState("");
+  const [bloodPressure, setBloodPressure] = useState("");
+  const [bloodGlucose, setBloodGlucose] = useState("");
+  const [responses, setResponses] = useState<CheckinResponses>(
+    emptyResponses(),
+  );
   const [photos, setPhotos] = useState<Partial<Record<PhotoAngle, File>>>({});
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+
+  function updateDailyLog(
+    day: DailyLogEntry["day"],
+    field: "weight" | "steps" | "hydration",
+    value: string,
+  ) {
+    setDailyLog((prev) =>
+      prev.map((entry) =>
+        entry.day === day ? { ...entry, [field]: value } : entry,
+      ),
+    );
+  }
+
+  function updateResponse(key: keyof CheckinResponses, value: string) {
+    setResponses((prev) => ({ ...prev, [key]: value }));
+  }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -39,11 +79,12 @@ export function CheckinForm() {
       .from("checkins")
       .insert({
         client_id: user.id,
-        weight: weight ? Number(weight) : null,
-        energy_rating: Number(energy),
-        sleep_rating: Number(sleep),
-        adherence_rating: Number(adherence),
-        notes: notes || null,
+        week_start: weekStart || null,
+        waist_cm: waistCm ? Number(waistCm) : null,
+        blood_pressure: bloodPressure || null,
+        blood_glucose: bloodGlucose || null,
+        daily_log: dailyLog,
+        responses,
       })
       .select()
       .single();
@@ -54,7 +95,7 @@ export function CheckinForm() {
       return;
     }
 
-    for (const angle of angles) {
+    for (const angle of photoAngles) {
       const file = photos[angle];
       if (!file) continue;
 
@@ -84,48 +125,149 @@ export function CheckinForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-8">
       <div>
-        <label htmlFor="weight" className="text-sm font-medium">
-          Weight (kg)
+        <label htmlFor="weekStart" className="text-sm font-medium">
+          Week starting (Tuesday)
         </label>
         <input
-          id="weight"
-          type="number"
-          step="0.1"
-          value={weight}
-          onChange={(e) => setWeight(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-black/15 px-3 py-2 text-sm dark:border-white/20 dark:bg-transparent"
-        />
-      </div>
-
-      <div className="grid grid-cols-3 gap-4">
-        <RatingField label="Energy" value={energy} onChange={setEnergy} />
-        <RatingField label="Sleep" value={sleep} onChange={setSleep} />
-        <RatingField
-          label="Adherence"
-          value={adherence}
-          onChange={setAdherence}
+          id="weekStart"
+          type="date"
+          value={weekStart}
+          onChange={(e) => setWeekStart(e.target.value)}
+          className={inputClass}
         />
       </div>
 
       <div>
-        <label htmlFor="notes" className="text-sm font-medium">
-          Anything your coach should know?
-        </label>
-        <textarea
-          id="notes"
-          rows={4}
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-black/15 px-3 py-2 text-sm dark:border-white/20 dark:bg-transparent"
-        />
+        <p className="text-sm font-medium">
+          Daily bodyweight and steps (weigh and record every morning)
+        </p>
+        <div className="mt-2 overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left text-xs text-foreground/60">
+                <th className="pb-2 pr-2">Day</th>
+                <th className="pb-2 pr-2">Weight (kg)</th>
+                <th className="pb-2 pr-2">Steps</th>
+                <th className="pb-2">Hydration</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dailyLog.map((entry) => (
+                <tr key={entry.day}>
+                  <td className="py-1 pr-2 text-foreground/70">
+                    {entry.day}
+                  </td>
+                  <td className="py-1 pr-2">
+                    <input
+                      type="number"
+                      step="0.1"
+                      value={entry.weight}
+                      onChange={(e) =>
+                        updateDailyLog(entry.day, "weight", e.target.value)
+                      }
+                      className={inputClass}
+                    />
+                  </td>
+                  <td className="py-1 pr-2">
+                    <input
+                      type="number"
+                      value={entry.steps}
+                      onChange={(e) =>
+                        updateDailyLog(entry.day, "steps", e.target.value)
+                      }
+                      className={inputClass}
+                    />
+                  </td>
+                  <td className="py-1">
+                    <input
+                      type="text"
+                      value={entry.hydration}
+                      onChange={(e) =>
+                        updateDailyLog(entry.day, "hydration", e.target.value)
+                      }
+                      className={inputClass}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div>
+          <label htmlFor="waist" className="text-sm font-medium">
+            Waist measurement (cm)
+          </label>
+          <input
+            id="waist"
+            type="number"
+            step="0.1"
+            value={waistCm}
+            onChange={(e) => setWaistCm(e.target.value)}
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label htmlFor="bp" className="text-sm font-medium">
+            Blood pressure (if applicable)
+          </label>
+          <input
+            id="bp"
+            type="text"
+            placeholder="NA"
+            value={bloodPressure}
+            onChange={(e) => setBloodPressure(e.target.value)}
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label htmlFor="glucose" className="text-sm font-medium">
+            Blood glucose (if applicable)
+          </label>
+          <input
+            id="glucose"
+            type="text"
+            placeholder="NA"
+            value={bloodGlucose}
+            onChange={(e) => setBloodGlucose(e.target.value)}
+            className={inputClass}
+          />
+        </div>
+      </div>
+
+      <FieldSection
+        title="General feedback"
+        fields={GENERAL_FIELDS}
+        responses={responses}
+        onChange={updateResponse}
+      />
+      <FieldSection
+        title="Training feedback"
+        fields={TRAINING_FIELDS}
+        responses={responses}
+        onChange={updateResponse}
+      />
+      <FieldSection
+        title="Nutrition feedback"
+        fields={NUTRITION_FIELDS}
+        responses={responses}
+        onChange={updateResponse}
+      />
+      <FieldSection
+        title="Wrap-up"
+        fields={CLOSING_FIELDS}
+        responses={responses}
+        onChange={updateResponse}
+      />
+
       <div>
-        <p className="text-sm font-medium">Progress photos</p>
+        <p className="text-sm font-medium">Progress photos (optional)</p>
         <div className="mt-2 grid grid-cols-3 gap-4">
-          {angles.map((angle) => (
+          {photoAngles.map((angle) => (
             <div key={angle}>
               <label
                 htmlFor={`photo-${angle}`}
@@ -163,29 +305,55 @@ export function CheckinForm() {
   );
 }
 
-function RatingField({
-  label,
-  value,
+function FieldSection({
+  title,
+  fields,
+  responses,
   onChange,
 }: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
+  title: string;
+  fields: CheckinFieldConfig[];
+  responses: CheckinResponses;
+  onChange: (key: keyof CheckinResponses, value: string) => void;
 }) {
   return (
     <div>
-      <label className="text-sm font-medium">{label}</label>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="mt-1 w-full rounded-lg border border-black/15 px-3 py-2 text-sm dark:border-white/20 dark:bg-transparent"
-      >
-        {ratingOptions.map((n) => (
-          <option key={n} value={n}>
-            {n}
-          </option>
+      <h2 className="text-base font-medium">{title}</h2>
+      <div className="mt-3 flex flex-col gap-4">
+        {fields.map((field) => (
+          <div key={field.key}>
+            <label className="text-sm font-medium">{field.label}</label>
+            {field.type === "rating" ? (
+              <select
+                value={responses[field.key]}
+                onChange={(e) => onChange(field.key, e.target.value)}
+                className={inputClass}
+              >
+                <option value="">—</option>
+                {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+                  <option key={n} value={n}>
+                    {n}
+                  </option>
+                ))}
+              </select>
+            ) : field.type === "textarea" ? (
+              <textarea
+                rows={2}
+                value={responses[field.key]}
+                onChange={(e) => onChange(field.key, e.target.value)}
+                className={inputClass}
+              />
+            ) : (
+              <input
+                type="text"
+                value={responses[field.key]}
+                onChange={(e) => onChange(field.key, e.target.value)}
+                className={inputClass}
+              />
+            )}
+          </div>
         ))}
-      </select>
+      </div>
     </div>
   );
 }

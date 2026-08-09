@@ -9,15 +9,61 @@ export interface Profile {
   created_at: string;
 }
 
+export const CHECKIN_DAYS = [
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+  "Monday",
+] as const;
+
+export type CheckinDay = (typeof CHECKIN_DAYS)[number];
+
+export interface DailyLogEntry {
+  day: CheckinDay;
+  weight: string;
+  steps: string;
+  hydration: string;
+}
+
+export interface CheckinResponses {
+  energy: string;
+  mood: string;
+  hunger: string;
+  cravings: string;
+  stress: string;
+  sleep_hours: string;
+  sleep_quality: string;
+  sleep_consistency: string;
+  strength: string;
+  focus: string;
+  recovery: string;
+  training_difficulty: string;
+  completed_weight_training: string;
+  completed_cardio: string;
+  meals_as_planned: string;
+  supplements_taken: string;
+  peds_as_prescribed: string;
+  bloating: string;
+  toilet_visits: string;
+  gas: string;
+  biggest_win: string;
+  areas_to_improve: string;
+  additional_comments: string;
+}
+
 export interface Checkin {
   id: string;
   client_id: string;
   submitted_at: string;
-  weight: number | null;
-  energy_rating: number | null;
-  sleep_rating: number | null;
-  adherence_rating: number | null;
-  notes: string | null;
+  week_start: string | null;
+  waist_cm: number | null;
+  blood_pressure: string | null;
+  blood_glucose: string | null;
+  daily_log: DailyLogEntry[];
+  responses: CheckinResponses;
   status: "pending" | "reviewed";
 }
 

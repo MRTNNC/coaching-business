@@ -1,6 +1,34 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import type { Checkin, Plan } from "@/lib/types";
+import { WeightChart, type WeightPoint } from "@/components/portal/WeightChart";
+import { CHECKIN_DAYS, type Checkin, type Plan } from "@/lib/types";
+
+const DAY_OFFSET: Record<string, number> = Object.fromEntries(
+  CHECKIN_DAYS.map((day, index) => [day, index]),
+);
+
+function buildWeightPoints(
+  checkins: Pick<Checkin, "week_start" | "submitted_at" | "daily_log">[],
+): WeightPoint[] {
+  return checkins.flatMap((checkin) => {
+    const base = checkin.week_start ? new Date(checkin.week_start) : null;
+
+    return (checkin.daily_log ?? [])
+      .filter((entry) => entry.weight && !Number.isNaN(Number(entry.weight)))
+      .map((entry) => {
+        let label = entry.day.slice(0, 3);
+        if (base) {
+          const date = new Date(base);
+          date.setDate(date.getDate() + (DAY_OFFSET[entry.day] ?? 0));
+          label = date.toLocaleDateString(undefined, {
+            month: "short",
+            day: "numeric",
+          });
+        }
+        return { label, weight: Number(entry.weight) };
+      });
+  });
+}
 
 export default async function PortalDashboard() {
   const supabase = await createClient();
@@ -8,22 +36,33 @@ export default async function PortalDashboard() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const [{ data: latestCheckin }, { data: plans }] = await Promise.all([
-    supabase
-      .from("checkins")
-      .select("*")
-      .eq("client_id", user!.id)
-      .order("submitted_at", { ascending: false })
-      .limit(1)
-      .maybeSingle<Checkin>(),
-    supabase
-      .from("plans")
-      .select("*")
-      .eq("client_id", user!.id)
-      .order("created_at", { ascending: false })
-      .limit(3)
-      .returns<Plan[]>(),
-  ]);
+  const [{ data: latestCheckin }, { data: plans }, { data: weightCheckins }] =
+    await Promise.all([
+      supabase
+        .from("checkins")
+        .select("*")
+        .eq("client_id", user!.id)
+        .order("submitted_at", { ascending: false })
+        .limit(1)
+        .maybeSingle<Checkin>(),
+      supabase
+        .from("plans")
+        .select("*")
+        .eq("client_id", user!.id)
+        .order("created_at", { ascending: false })
+        .limit(3)
+        .returns<Plan[]>(),
+      supabase
+        .from("checkins")
+        .select("week_start, submitted_at, daily_log")
+        .eq("client_id", user!.id)
+        .order("submitted_at", { ascending: true })
+        .returns<
+          Pick<Checkin, "week_start" | "submitted_at" | "daily_log">[]
+        >(),
+    ]);
+
+  const weightPoints = buildWeightPoints(weightCheckins ?? []);
 
   return (
     <div className="flex flex-col gap-10">
@@ -46,6 +85,13 @@ export default async function PortalDashboard() {
         >
           Submit a check-in
         </Link>
+      </div>
+
+      <div>
+        <h2 className="text-lg font-medium">Weight progress</h2>
+        <div className="mt-4 rounded-2xl border border-black/10 p-6 dark:border-white/15">
+          <WeightChart data={weightPoints} />
+        </div>
       </div>
 
       <div>
