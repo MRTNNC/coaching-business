@@ -115,4 +115,5 @@ export interface Package {
   billing_period: string | null;
   stripe_price_id: string | null;
   sort_order: number;
+  is_addon: boolean;
 }
