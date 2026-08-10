@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const links = [
@@ -12,8 +13,8 @@ export function SiteHeader() {
   return (
     <header className="border-b border-black/10 dark:border-white/10">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <Link href="/" className="text-lg font-semibold tracking-tight">
-          Arzuno Fitness
+        <Link href="/" aria-label="Arzuno Fitness home">
+          <Image src="/logo.png" alt="Arzuno Fitness" width={429} height={121} className="h-8 w-auto" priority />
         </Link>
         <nav className="flex items-center gap-6 text-sm">
           {links.map((link) => (
