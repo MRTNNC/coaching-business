@@ -38,7 +38,7 @@ export default function HomePage() {
           </Link>
           <Link
             href="/pricing"
-            className="rounded-full border border-black/10 px-6 py-3 text-sm font-medium transition hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/10"
+            className="rounded-full border border-accent-secondary/40 px-6 py-3 text-sm font-medium transition hover:bg-accent-secondary/10"
           >
             See pricing
           </Link>
