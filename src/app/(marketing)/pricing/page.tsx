@@ -42,7 +42,7 @@ export default async function PricingPage() {
             </p>
             <Link
               href="/booking"
-              className="mt-6 rounded-full bg-foreground px-4 py-2 text-center text-sm font-medium text-background transition hover:opacity-90"
+              className="mt-6 rounded-full bg-accent px-4 py-2 text-center text-sm font-medium text-accent-foreground transition hover:opacity-90"
             >
               Book a call
             </Link>

@@ -43,6 +43,15 @@ export default async function CheckinsHistoryPage() {
     if (data?.signedUrl) signedPhotoUrls.set(photo.id, data.signedUrl);
   }
 
+  const signedVoiceNoteUrls = new Map<string, string>();
+  for (const comment of comments ?? []) {
+    if (!comment.voice_note_path) continue;
+    const { data } = await supabase.storage
+      .from("voice-notes")
+      .createSignedUrl(comment.voice_note_path, 60 * 5);
+    if (data?.signedUrl) signedVoiceNoteUrls.set(comment.id, data.signedUrl);
+  }
+
   return (
     <div>
       <h1 className="text-2xl font-semibold tracking-tight">
@@ -61,6 +70,7 @@ export default async function CheckinsHistoryPage() {
             comments={(comments ?? []).filter(
               (c) => c.checkin_id === checkin.id,
             )}
+            voiceNoteUrls={signedVoiceNoteUrls}
           />
         ))}
 

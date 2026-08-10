@@ -81,6 +81,7 @@ export interface Comment {
   checkin_id: string;
   admin_id: string;
   body: string;
+  voice_note_path: string | null;
   created_at: string;
 }
 

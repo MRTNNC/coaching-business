@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Martin Cull Coaching",
+  title: "Arzuno Fitness",
   description:
     "1:1 online coaching — training, nutrition, and accountability check-ins.",
 };

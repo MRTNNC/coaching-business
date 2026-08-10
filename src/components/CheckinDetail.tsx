@@ -18,12 +18,14 @@ export function CheckinDetail({
   photos,
   photoUrls,
   comments,
+  voiceNoteUrls,
   footer,
 }: {
   checkin: Checkin;
   photos: CheckinPhoto[];
   photoUrls: Map<string, string>;
   comments: Comment[];
+  voiceNoteUrls?: Map<string, string>;
   footer?: ReactNode;
 }) {
   const hasDailyLog = checkin.daily_log?.some(
@@ -140,11 +142,23 @@ export function CheckinDetail({
         <div className="mt-4 border-t border-black/10 pt-4 dark:border-white/10">
           <p className="text-xs font-medium text-foreground/60">Feedback</p>
           <ul className="mt-2 flex flex-col gap-2">
-            {comments.map((comment) => (
-              <li key={comment.id} className="text-sm">
-                {comment.body}
-              </li>
-            ))}
+            {comments.map((comment) => {
+              const voiceUrl = comment.voice_note_path
+                ? voiceNoteUrls?.get(comment.id)
+                : undefined;
+              return (
+                <li key={comment.id} className="text-sm">
+                  <p>{comment.body}</p>
+                  {voiceUrl && (
+                    <audio
+                      src={voiceUrl}
+                      controls
+                      className="mt-1 h-8 w-full max-w-xs"
+                    />
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}

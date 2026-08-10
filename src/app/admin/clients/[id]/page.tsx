@@ -70,6 +70,15 @@ export default async function ClientDetailPage({
     if (data?.signedUrl) signedPhotoUrls.set(photo.id, data.signedUrl);
   }
 
+  const signedVoiceNoteUrls = new Map<string, string>();
+  for (const comment of comments ?? []) {
+    if (!comment.voice_note_path) continue;
+    const { data } = await supabase.storage
+      .from("voice-notes")
+      .createSignedUrl(comment.voice_note_path, 60 * 5);
+    if (data?.signedUrl) signedVoiceNoteUrls.set(comment.id, data.signedUrl);
+  }
+
   return (
     <div className="flex flex-col gap-10">
       <div className="flex items-center justify-between">
@@ -81,7 +90,7 @@ export default async function ClientDetailPage({
         </div>
         <Link
           href={`/admin/clients/${id}/plans/new`}
-          className="rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition hover:opacity-90"
+          className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition hover:opacity-90"
         >
           New plan
         </Link>
@@ -130,6 +139,7 @@ export default async function ClientDetailPage({
               comments={(comments ?? []).filter(
                 (c) => c.checkin_id === checkin.id,
               )}
+              voiceNoteUrls={signedVoiceNoteUrls}
               footer={<CommentForm checkinId={checkin.id} />}
             />
           ))}

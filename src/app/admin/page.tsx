@@ -34,7 +34,7 @@ export default async function AdminDashboard() {
           <h1 className="text-2xl font-semibold tracking-tight">Clients</h1>
           <Link
             href="/admin/clients/new"
-            className="rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition hover:opacity-90"
+            className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition hover:opacity-90"
           >
             Invite client
           </Link>

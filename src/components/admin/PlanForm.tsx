@@ -165,7 +165,7 @@ export function PlanForm({ clientId }: { clientId: string }) {
       <button
         type="submit"
         disabled={submitting}
-        className="self-start rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition hover:opacity-90 disabled:opacity-50"
+        className="self-start rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition hover:opacity-90 disabled:opacity-50"
       >
         {submitting ? "Saving…" : "Save & send plan"}
       </button>

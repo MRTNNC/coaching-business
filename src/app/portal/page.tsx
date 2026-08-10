@@ -81,7 +81,7 @@ export default async function PortalDashboard() {
         </p>
         <Link
           href="/portal/checkin"
-          className="mt-4 inline-block rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition hover:opacity-90"
+          className="mt-4 inline-block rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition hover:opacity-90"
         >
           Submit a check-in
         </Link>

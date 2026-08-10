@@ -32,7 +32,7 @@ export default function HomePage() {
         <div className="mt-10 flex justify-center gap-4">
           <Link
             href="/booking"
-            className="rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition hover:opacity-90"
+            className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-accent-foreground transition hover:opacity-90"
           >
             Book a free call
           </Link>
@@ -74,7 +74,7 @@ export default function HomePage() {
           </p>
           <Link
             href="/booking"
-            className="mt-8 inline-block rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition hover:opacity-90"
+            className="mt-8 inline-block rounded-full bg-accent px-6 py-3 text-sm font-medium text-accent-foreground transition hover:opacity-90"
           >
             Book a free call
           </Link>

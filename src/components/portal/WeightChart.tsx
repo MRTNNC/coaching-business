@@ -43,7 +43,7 @@ export function WeightChart({ data }: { data: WeightPoint[] }) {
           <Line
             type="monotone"
             dataKey="weight"
-            stroke="#10b981"
+            stroke="#3ddcff"
             strokeWidth={2}
             dot={{ r: 3 }}
           />

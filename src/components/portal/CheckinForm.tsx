@@ -297,7 +297,7 @@ export function CheckinForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition hover:opacity-90 disabled:opacity-50"
+        className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition hover:opacity-90 disabled:opacity-50"
       >
         {submitting ? "Submitting…" : "Submit check-in"}
       </button>
