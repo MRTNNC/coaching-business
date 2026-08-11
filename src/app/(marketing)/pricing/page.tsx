@@ -62,7 +62,14 @@ export default async function PricingPage() {
           </h2>
           <p className="mt-2 text-foreground/70">
             One-off sessions, for whenever you don&apos;t want an ongoing
-            package.
+            package. Drop an email to{" "}
+            <a
+              href="mailto:m.cull@arzuno.co.uk"
+              className="font-medium text-foreground underline underline-offset-2"
+            >
+              m.cull@arzuno.co.uk
+            </a>{" "}
+            to arrange one of the below.
           </p>
           <div className="mt-6 flex flex-col gap-3">
             {addons.map((addon) => (

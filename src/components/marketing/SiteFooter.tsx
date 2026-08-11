@@ -14,6 +14,9 @@ export function SiteFooter() {
           <Link href="/privacy" className="transition hover:text-foreground">
             Privacy Policy
           </Link>
+          <Link href="/contact" className="transition hover:text-foreground">
+            Contact us
+          </Link>
           {socialLinks.map((link) => (
             <a
               key={link.label}

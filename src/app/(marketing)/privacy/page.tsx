@@ -125,9 +125,12 @@ export default function PrivacyPolicyPage() {
           </h2>
           <p className="mt-2">
             For any questions about this policy or your data, contact us at{" "}
-            <span className="font-medium text-foreground">
-              [add your contact email]
-            </span>
+            <a
+              href="mailto:m.cull@arzuno.co.uk"
+              className="font-medium text-foreground underline underline-offset-2"
+            >
+              m.cull@arzuno.co.uk
+            </a>
             .
           </p>
         </div>
