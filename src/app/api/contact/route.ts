@@ -30,7 +30,7 @@ export async function POST(request: Request) {
 
   const resend = new Resend(process.env.RESEND_API_KEY);
   const fromAddress =
-    process.env.RESEND_FROM_EMAIL ?? "Arzuno Fitness <onboarding@resend.dev>";
+    process.env.RESEND_FROM_EMAIL ?? "Arzuno Coaching <onboarding@resend.dev>";
 
   const { error } = await resend.emails.send({
     from: fromAddress,

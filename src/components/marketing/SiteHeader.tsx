@@ -20,12 +20,12 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <Link
           href="/"
-          aria-label="Arzuno Fitness home"
+          aria-label="Arzuno Coaching home"
           onClick={() => setOpen(false)}
         >
           <Image
             src="/logo.png"
-            alt="Arzuno Fitness"
+            alt="Arzuno Coaching"
             width={429}
             height={121}
             className="h-8 w-auto"

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Arzuno Fitness",
+  title: "Arzuno Coaching",
   description:
     "1:1 online coaching — training, nutrition, and accountability check-ins.",
 };

@@ -18,7 +18,7 @@ export default function PrivacyPolicyPage() {
             Who we are
           </h2>
           <p className="mt-2">
-            Arzuno Fitness (&quot;we&quot;, &quot;us&quot;) provides 1:1
+            Arzuno Coaching (&quot;we&quot;, &quot;us&quot;) provides 1:1
             online coaching, including training and nutrition guidance. This
             policy explains what personal data we collect through this
             website and client portal, why we collect it, and what rights
