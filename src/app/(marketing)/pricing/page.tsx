@@ -22,7 +22,7 @@ export default async function PricingPage() {
         figure it out together.
       </p>
 
-      <div className="mt-12 grid gap-6 sm:grid-cols-2">
+      <div className="mt-12 grid gap-6 sm:grid-cols-3">
         {plans.map((pkg) => (
           <div
             key={pkg.id}
@@ -37,6 +37,11 @@ export default async function PricingPage() {
                 </span>
               )}
             </p>
+            {pkg.monthly_equivalent && (
+              <p className="mt-1 text-sm text-foreground/60">
+                &asymp; £{pkg.monthly_equivalent}/month equivalent
+              </p>
+            )}
             <p className="mt-4 flex-1 text-sm text-foreground/70">
               {pkg.description}
             </p>
@@ -62,20 +67,15 @@ export default async function PricingPage() {
           </h2>
           <p className="mt-2 text-foreground/70">
             One-off sessions, for whenever you don&apos;t want an ongoing
-            package. Drop an email to{" "}
-            <a
-              href="mailto:m.cull@arzuno.co.uk"
-              className="font-medium text-foreground underline underline-offset-2"
-            >
-              m.cull@arzuno.co.uk
-            </a>{" "}
-            to arrange one of the below.
+            package. Select one to book a call and we&apos;ll arrange the
+            details.
           </p>
           <div className="mt-6 flex flex-col gap-3">
             {addons.map((addon) => (
-              <div
+              <Link
                 key={addon.id}
-                className="flex items-center justify-between gap-4 rounded-xl border border-black/10 px-5 py-4 dark:border-white/15"
+                href="/booking"
+                className="flex items-center justify-between gap-4 rounded-xl border border-white/10 px-5 py-4 transition hover:bg-white/5"
               >
                 <div>
                   <p className="font-medium">{addon.name}</p>
@@ -88,7 +88,7 @@ export default async function PricingPage() {
                 <p className="whitespace-nowrap text-lg font-semibold">
                   £{addon.price}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
