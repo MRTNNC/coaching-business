@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AddonList } from "@/components/marketing/AddonList";
 import { createClient } from "@/lib/supabase/server";
 import type { Package } from "@/lib/types";
 
@@ -69,30 +70,10 @@ export default async function PricingPage() {
           </h2>
           <p className="mt-2 text-foreground/70">
             One-off sessions, for whenever you don&apos;t want an ongoing
-            package. Select one to book a call and we&apos;ll arrange the
+            package. Select one to send an email and we&apos;ll arrange the
             details.
           </p>
-          <div className="mt-6 flex flex-col gap-3">
-            {addons.map((addon) => (
-              <Link
-                key={addon.id}
-                href="/booking"
-                className="flex items-center justify-between gap-4 rounded-xl border border-white/10 px-5 py-4 transition hover:bg-white/5"
-              >
-                <div>
-                  <p className="font-medium">{addon.name}</p>
-                  {addon.description && (
-                    <p className="mt-1 text-sm text-foreground/70">
-                      {addon.description}
-                    </p>
-                  )}
-                </div>
-                <p className="whitespace-nowrap text-lg font-semibold">
-                  £{addon.price}
-                </p>
-              </Link>
-            ))}
-          </div>
+          <AddonList addons={addons} />
         </div>
       )}
     </section>
