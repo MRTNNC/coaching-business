@@ -9,7 +9,9 @@ export function InquiryModal({
   service: string;
   onClose: () => void;
 }) {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [status, setStatus] = useState<
@@ -25,7 +27,7 @@ export function InquiryModal({
     const res = await fetch("/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ service, email, message, honeypot }),
+      body: JSON.stringify({ service, name, email, phone, message, honeypot }),
     });
 
     if (!res.ok) {
@@ -76,6 +78,20 @@ export function InquiryModal({
             </div>
 
             <div>
+              <label htmlFor="inquiry-name" className="text-sm font-medium">
+                Your name
+              </label>
+              <input
+                id="inquiry-name"
+                type="text"
+                required
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                className="mt-1 w-full rounded-lg border border-white/15 bg-transparent px-3 py-2 text-sm"
+              />
+            </div>
+
+            <div>
               <label htmlFor="inquiry-email" className="text-sm font-medium">
                 Your email
               </label>
@@ -85,6 +101,19 @@ export function InquiryModal({
                 required
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
+                className="mt-1 w-full rounded-lg border border-white/15 bg-transparent px-3 py-2 text-sm"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="inquiry-phone" className="text-sm font-medium">
+                Phone number (optional)
+              </label>
+              <input
+                id="inquiry-phone"
+                type="tel"
+                value={phone}
+                onChange={(event) => setPhone(event.target.value)}
                 className="mt-1 w-full rounded-lg border border-white/15 bg-transparent px-3 py-2 text-sm"
               />
             </div>

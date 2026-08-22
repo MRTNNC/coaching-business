@@ -4,7 +4,8 @@ import { NextResponse } from "next/server";
 const CONTACT_EMAIL = "m.cull@arzuno.co.uk";
 
 export async function POST(request: Request) {
-  const { service, email, message, honeypot } = await request.json();
+  const { service, name, email, phone, message, honeypot } =
+    await request.json();
 
   if (honeypot) {
     return NextResponse.json({ ok: true });
@@ -13,6 +14,8 @@ export async function POST(request: Request) {
   if (
     !service ||
     typeof service !== "string" ||
+    !name ||
+    typeof name !== "string" ||
     !email ||
     typeof email !== "string" ||
     !email.includes("@") ||
@@ -20,7 +23,7 @@ export async function POST(request: Request) {
     typeof message !== "string"
   ) {
     return NextResponse.json(
-      { error: "Please fill in your email and details." },
+      { error: "Please fill in your name, email, and details." },
       { status: 400 },
     );
   }
@@ -34,7 +37,9 @@ export async function POST(request: Request) {
     to: CONTACT_EMAIL,
     replyTo: email,
     subject: `Enquiry: ${service}`,
-    text: `Service: ${service}\nFrom: ${email}\n\n${message}`,
+    text: `Service: ${service}\nName: ${name}\nEmail: ${email}\nPhone: ${
+      phone && typeof phone === "string" ? phone : "Not provided"
+    }\n\n${message}`,
   });
 
   if (error) {
