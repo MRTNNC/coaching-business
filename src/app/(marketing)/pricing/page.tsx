@@ -37,11 +37,13 @@ export default async function PricingPage() {
                 </span>
               )}
             </p>
-            {pkg.monthly_equivalent && (
-              <p className="mt-1 text-sm text-foreground/60">
-                &asymp; £{pkg.monthly_equivalent}/month equivalent
-              </p>
-            )}
+            <p
+              className={`mt-1 text-sm text-foreground/60 ${
+                pkg.monthly_equivalent ? "" : "invisible"
+              }`}
+            >
+              &asymp; £{pkg.monthly_equivalent ?? 0}/month equivalent
+            </p>
             <p className="mt-4 flex-1 text-sm text-foreground/70">
               {pkg.description}
             </p>
