@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description:
+    "How Arzuno Coaching collects, uses, and protects your personal data.",
+};
+
 export default function PrivacyPolicyPage() {
   return (
     <section className="mx-auto max-w-3xl px-6 py-20">

@@ -1,7 +1,14 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { AddonList } from "@/components/marketing/AddonList";
 import { createClient } from "@/lib/supabase/server";
 import type { Package } from "@/lib/types";
+
+export const metadata: Metadata = {
+  title: "Pricing",
+  description:
+    "Coaching packages from £120/month, plus one-off training, nutrition, and bloodwork consultation sessions.",
+};
 
 export default async function PricingPage() {
   const supabase = await createClient();
@@ -14,8 +21,33 @@ export default async function PricingPage() {
   const plans = (packages ?? []).filter((pkg) => !pkg.is_addon);
   const addons = (packages ?? []).filter((pkg) => pkg.is_addon);
 
+  const offerCatalogJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: "Fitness and Nutrition Coaching",
+    provider: {
+      "@type": "ProfessionalService",
+      name: "Arzuno Coaching",
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Coaching Packages and Services",
+      itemListElement: [...plans, ...addons].map((pkg) => ({
+        "@type": "Offer",
+        name: pkg.name,
+        ...(pkg.description ? { description: pkg.description } : {}),
+        price: pkg.price,
+        priceCurrency: "GBP",
+      })),
+    },
+  };
+
   return (
     <section className="mx-auto max-w-5xl px-6 py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogJsonLd) }}
+      />
       <h1 className="text-3xl font-semibold tracking-tight">Pricing</h1>
       <p className="mt-4 max-w-2xl text-foreground/70">
         Every package includes a personalised plan, weekly check-ins, and

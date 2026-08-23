@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description: "Get in touch with Arzuno Coaching by email or Instagram.",
+};
+
 export default function ContactPage() {
   return (
     <section className="mx-auto max-w-3xl px-6 py-20">

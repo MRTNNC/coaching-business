@@ -1,4 +1,11 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Meet Martin Cull — finance professional by day, competing bodybuilder and 1:1 coach who builds training and nutrition plans around a demanding full-time career.",
+};
 
 export default function AboutPage() {
   return (

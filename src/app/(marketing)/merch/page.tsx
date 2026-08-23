@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Merch",
+  description: "Arzuno Coaching merchandise — coming soon.",
+};
+
 export default function MerchPage() {
   return (
     <section className="mx-auto max-w-3xl px-6 py-20 text-center">

@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
+
 const calComLink =
   process.env.NEXT_PUBLIC_CAL_COM_LINK ?? "https://cal.com";
+
+export const metadata: Metadata = {
+  title: "Book a Call",
+  description:
+    "Book a free intro call to discuss your goals and find the right Arzuno Coaching package for you.",
+};
 
 export default function BookingPage() {
   return (
