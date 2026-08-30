@@ -37,6 +37,9 @@ export const metadata: Metadata = {
     title: `${siteName} — 1:1 Online Fitness & Nutrition Coaching`,
     description: defaultDescription,
   },
+  verification: {
+    google: "Bl0yxtk5KOS32WQi2PgMKFaHRGkhtT8zJnaw4b3ADIA",
+  },
 };
 
 const organizationJsonLd = {
