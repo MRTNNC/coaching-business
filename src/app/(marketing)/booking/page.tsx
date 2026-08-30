@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Book a Call",
   description:
     "Book a free intro call to discuss your goals and find the right Arzuno Coaching package for you.",
+  alternates: {
+    canonical: "/booking",
+  },
 };
 
 export default function BookingPage() {

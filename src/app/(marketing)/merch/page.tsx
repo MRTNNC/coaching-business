@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Merch",
   description: "Arzuno Coaching merchandise — coming soon.",
+  alternates: {
+    canonical: "/merch",
+  },
 };
 
 export default function MerchPage() {

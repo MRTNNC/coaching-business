@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "Pricing",
   description:
     "Coaching packages from £120/month, plus one-off training, nutrition, and bloodwork consultation sessions.",
+  alternates: {
+    canonical: "/pricing",
+  },
 };
 
 export default async function PricingPage() {
