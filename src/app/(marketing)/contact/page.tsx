@@ -26,7 +26,7 @@ export default function ContactPage() {
           <span className="text-foreground/70">m.cull@arzuno.co.uk</span>
         </a>
         <a
-          href="#"
+          href="https://www.instagram.com/martin_cull_fit/"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-between rounded-xl border border-white/10 px-5 py-4 transition hover:bg-white/5"

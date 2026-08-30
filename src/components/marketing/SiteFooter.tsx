@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const socialLinks = [
-  { label: "Instagram", href: "#" },
+  { label: "Instagram", href: "https://www.instagram.com/martin_cull_fit/" },
   { label: "TikTok", href: "#" },
 ];
 

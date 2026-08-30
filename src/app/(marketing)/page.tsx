@@ -4,7 +4,7 @@ const services = [
   {
     title: "Personalised training",
     description:
-      "A programme built around your goals, equipment, and schedule — not a generic template.",
+      "A programme built around your goals, equipment, and schedule. Not a generic template.",
   },
   {
     title: "Nutrition guidance",
