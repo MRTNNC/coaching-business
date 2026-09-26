@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a vertical, silent, dark-graded Instagram reel from raw clips with ffmpeg.
+"""Build a vertical, silent, caption-free, real-speed, dark-graded Instagram reel from raw clips with ffmpeg.
 
 Usage:
     python3 reels/make_reel.py reels/edits/leg-day.json
@@ -10,18 +10,14 @@ The edit list (JSON) looks like:
   "raw_dir": "reels/raw",
   "handle": "@yourpage",
   "segments": [
-    {"file": "squat.mov", "start": 12.5, "end": 15.0, "text": "LEG DAY", "speed": 1.0},
-    {"file": "squat.mov", "start": 20.0, "end": 22.0, "slowmo": [0.8, 1.6]},
+    {"file": "squat.mov", "start": 12.5, "end": 15.0, "punch_in": true},
+    {"file": "squat.mov", "start": 20.0, "end": 22.0},
     ...
   ]
 }
 
 Per-segment options:
   file, start, end  source clip and the section to keep (seconds)
-  text              optional overlay (big, centred, lower third)
-  speed             playback speed for the whole segment (default 1.0)
-  slowmo            [from, to] seconds *within the segment* played at half speed
-                    (a speed ramp on the hardest rep)
   punch_in          true = slow 1.0 -> 1.12 zoom across the segment
   focus_x           0..1 horizontal crop centre for landscape sources (default 0.5)
 """
@@ -70,45 +66,25 @@ def frame_filter(seg):
     return f
 
 
-def text_filter(text, y_expr="h*0.70", size=96, dur=None):
+def text_filter(text, y_expr="h*0.06", size=44):
     # Shrink long captions so they fit inside ~86% of the frame width
     # (DejaVu Sans Bold caps average ~0.68em wide).
     size = min(size, int(W * 0.86 / (0.68 * max(len(text), 1))))
-    fade = f":alpha='min(1,t/0.15)'" if dur else ""
     return (
         f"drawtext=fontfile={FONT}:text='{esc(text)}':fontsize={size}:fontcolor=white"
         f":borderw=0:shadowcolor=black@0.8:shadowx=0:shadowy=6"
         f":box=1:boxcolor=black@0.55:boxborderw=28"
-        f":x=(w-text_w)/2:y={y_expr}{fade}"
+        f":x=(w-text_w)/2:y={y_expr}"
     )
 
 
 def render_segment(seg, raw_dir, out_path):
     src = os.path.join(raw_dir, seg["file"])
     start, end = float(seg["start"]), float(seg["end"])
-    speed = float(seg.get("speed", 1.0))
-    base = frame_filter(seg)
-
-    slow = seg.get("slowmo")
-    if slow:
-        a, b = start + slow[0], start + slow[1]
-        pieces = [(start, a, speed), (a, b, 0.5), (b, end, speed)]
-    else:
-        pieces = [(start, end, speed)]
-
-    chains, labels = [], []
-    for i, (s, e, sp) in enumerate(p for p in pieces if p[1] - p[0] > 0.01):
-        chains.append(
-            f"[0:v]trim={s}:{e},setpts=(PTS-STARTPTS)/{sp},{','.join(base)}[p{i}]"
-        )
-        labels.append(f"[p{i}]")
-    graph = ";".join(chains) + f";{''.join(labels)}concat=n={len(labels)}:v=1:a=0[v]"
-    if seg.get("text"):
-        graph = graph[:-3] + "[c];[c]" + text_filter(seg["text"], dur=True) + "[v]"
-
     run([
-        "ffmpeg", "-y", "-v", "error", "-i", src, "-filter_complex", graph,
-        "-map", "[v]", "-an", "-c:v", "libx264", "-preset", "medium", "-crf", "18",
+        "ffmpeg", "-y", "-v", "error", "-ss", str(start), "-to", str(end), "-i", src,
+        "-vf", ",".join(frame_filter(seg)),
+        "-an", "-c:v", "libx264", "-preset", "medium", "-crf", "18",
         "-pix_fmt", "yuv420p", "-r", str(FPS), out_path,
     ])
 
@@ -142,7 +118,7 @@ def main():
         # Instagram sounds get added in the app.
         post = "fade=in:st=0:d=0.25"
         if edit.get("handle"):
-            post += "," + text_filter(edit["handle"], y_expr="h*0.06", size=44)
+            post += "," + text_filter(edit["handle"])
         run(["ffmpeg", "-y", "-v", "error", "-i", joined, "-vf", post, "-an",
              "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p",
              "-r", str(FPS), "-movflags", "+faststart", output])

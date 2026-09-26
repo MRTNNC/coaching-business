@@ -3,11 +3,11 @@
   "raw_dir": "reels/raw",
   "handle": "@yourpage",
   "segments": [
-    {"file": "squat.mp4",     "start": 0.0, "end": 2.0, "text": "LEG DAY. NO SHORTCUTS.", "punch_in": true},
-    {"file": "squat.mp4",     "start": 3.0, "end": 5.5, "text": "SQUAT  4 x 6", "slowmo": [1.0, 1.8]},
-    {"file": "legpress.mp4",  "start": 0.5, "end": 2.5, "text": "LEG PRESS  3 x 12"},
-    {"file": "rdl.mp4",       "start": 1.0, "end": 3.0, "text": "RDL  3 x 8"},
-    {"file": "extension.mp4", "start": 0.0, "end": 2.0, "text": "EXTENSIONS  TO FAILURE", "speed": 1.2},
-    {"file": "pump.mp4",      "start": 0.0, "end": 2.5, "text": "FOLLOW FOR MORE", "punch_in": true}
+    {"file": "squat.mp4",     "start": 0.0, "end": 2.0, "punch_in": true},
+    {"file": "squat.mp4",     "start": 3.0, "end": 5.5},
+    {"file": "legpress.mp4",  "start": 0.5, "end": 2.5},
+    {"file": "rdl.mp4",       "start": 1.0, "end": 3.0},
+    {"file": "extension.mp4", "start": 0.0, "end": 2.0},
+    {"file": "pump.mp4",      "start": 0.0, "end": 2.5, "punch_in": true}
   ]
 }
