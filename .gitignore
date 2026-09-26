@@ -43,3 +43,7 @@ next-env.d.ts
 
 # local agent settings
 .claude/settings.local.json
+
+# reel raw footage and renders
+/reels/raw/
+/reels/out/
