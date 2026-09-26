@@ -1,7 +1,6 @@
 {
   "output": "reels/out/leg-day.mp4",
   "raw_dir": "reels/raw",
-  "handle": "@yourpage",
   "segments": [
     {"file": "squat.mp4",     "start": 0.0, "end": 2.0, "punch_in": true},
     {"file": "squat.mp4",     "start": 3.0, "end": 5.5},

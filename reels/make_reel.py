@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a vertical, silent, caption-free, real-speed, dark-graded Instagram reel from raw clips with ffmpeg.
+"""Build a vertical, silent, text-free, real-speed, dark-graded Instagram reel from raw clips with ffmpeg.
 
 Usage:
     python3 reels/make_reel.py reels/edits/leg-day.json
@@ -8,7 +8,6 @@ The edit list (JSON) looks like:
 {
   "output": "reels/out/leg-day.mp4",
   "raw_dir": "reels/raw",
-  "handle": "@yourpage",
   "segments": [
     {"file": "squat.mov", "start": 12.5, "end": 15.0, "punch_in": true},
     {"file": "squat.mov", "start": 20.0, "end": 22.0},
@@ -28,7 +27,6 @@ import sys
 import tempfile
 
 W, H, FPS = 1080, 1920, 30
-FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 
 # Dark, moody grade: crush blacks a touch, lift contrast, pull saturation,
 # cool the shadows slightly, then vignette.
@@ -47,10 +45,6 @@ def run(cmd):
         raise SystemExit(f"ffmpeg failed: {' '.join(cmd[:6])} ...")
 
 
-def esc(text):
-    return text.replace("\\", "\\\\").replace(":", "\\:").replace("'", "’").replace("%", "\\%")
-
-
 def frame_filter(seg):
     fx = float(seg.get("focus_x", 0.5))
     # Fill 9:16 then crop around focus_x (lets you keep the lifter centred in landscape footage).
@@ -64,18 +58,6 @@ def frame_filter(seg):
     f.append(f"fps={FPS}")
     f.append(GRADE)
     return f
-
-
-def text_filter(text, y_expr="h*0.06", size=44):
-    # Shrink long captions so they fit inside ~86% of the frame width
-    # (DejaVu Sans Bold caps average ~0.68em wide).
-    size = min(size, int(W * 0.86 / (0.68 * max(len(text), 1))))
-    return (
-        f"drawtext=fontfile={FONT}:text='{esc(text)}':fontsize={size}:fontcolor=white"
-        f":borderw=0:shadowcolor=black@0.8:shadowx=0:shadowy=6"
-        f":box=1:boxcolor=black@0.55:boxborderw=28"
-        f":x=(w-text_w)/2:y={y_expr}"
-    )
 
 
 def render_segment(seg, raw_dir, out_path):
@@ -114,12 +96,8 @@ def main():
         run(["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", listing,
              "-c", "copy", joined])
 
-        # Persistent handle watermark + fade-in from black. No audio track:
-        # Instagram sounds get added in the app.
-        post = "fade=in:st=0:d=0.25"
-        if edit.get("handle"):
-            post += "," + text_filter(edit["handle"])
-        run(["ffmpeg", "-y", "-v", "error", "-i", joined, "-vf", post, "-an",
+        # Fade in from black. No audio track: Instagram sounds get added in the app.
+        run(["ffmpeg", "-y", "-v", "error", "-i", joined, "-vf", "fade=in:st=0:d=0.25", "-an",
              "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p",
              "-r", str(FPS), "-movflags", "+faststart", output])
     print(f"Done -> {output}")
