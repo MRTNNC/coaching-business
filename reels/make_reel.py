@@ -8,12 +8,15 @@ The edit list (JSON) looks like:
 {
   "output": "reels/out/leg-day.mp4",
   "raw_dir": "reels/raw",
+  "grade": "dark",
   "segments": [
     {"file": "squat.mov", "start": 12.5, "end": 15.0, "punch_in": true},
     {"file": "squat.mov", "start": 20.0, "end": 22.0},
     ...
   ]
 }
+
+grade: "dark" (moody, default), "light" (subtle contrast only) or "none".
 
 Per-segment options:
   file, start, end  source clip and the section to keep (seconds)
@@ -28,14 +31,20 @@ import tempfile
 
 W, H, FPS = 1080, 1920, 30
 
-# Dark, moody grade: crush blacks a touch, lift contrast, pull saturation,
-# cool the shadows slightly, then vignette.
-GRADE = (
-    "eq=contrast=1.18:brightness=-0.05:saturation=0.82:gamma=0.95,"
-    "colorbalance=rs=-0.04:bs=0.05:rh=0.03,"
-    "curves=master='0/0 0.15/0.08 0.5/0.47 1/0.96',"
-    "vignette=PI/4.5"
-)
+# Colour grades, picked per reel with "grade" in the edit list (default "dark").
+GRADES = {
+    # Dark, moody: crush blacks a touch, lift contrast, pull saturation,
+    # cool the shadows slightly, then vignette.
+    "dark": (
+        "eq=contrast=1.18:brightness=-0.05:saturation=0.82:gamma=0.95,"
+        "colorbalance=rs=-0.04:bs=0.05:rh=0.03,"
+        "curves=master='0/0 0.15/0.08 0.5/0.47 1/0.96',"
+        "vignette=PI/4.5"
+    ),
+    # Light touch: a little extra contrast so different gyms sit together.
+    "light": "eq=contrast=1.06:saturation=0.96",
+    "none": None,
+}
 
 
 def run(cmd):
@@ -45,7 +54,7 @@ def run(cmd):
         raise SystemExit(f"ffmpeg failed: {' '.join(cmd[:6])} ...")
 
 
-def frame_filter(seg):
+def frame_filter(seg, grade):
     fx = float(seg.get("focus_x", 0.5))
     # Fill 9:16 then crop around focus_x (lets you keep the lifter centred in landscape footage).
     f = [
@@ -56,16 +65,17 @@ def frame_filter(seg):
         d = seg["end"] - seg["start"]
         f.append(f"scale=w='{W}*(1+0.12*t/{d})':h=-2:eval=frame,crop={W}:{H}")
     f.append(f"fps={FPS}")
-    f.append(GRADE)
+    if GRADES[grade]:
+        f.append(GRADES[grade])
     return f
 
 
-def render_segment(seg, raw_dir, out_path):
+def render_segment(seg, raw_dir, out_path, grade):
     src = os.path.join(raw_dir, seg["file"])
     start, end = float(seg["start"]), float(seg["end"])
     run([
-        "ffmpeg", "-y", "-v", "error", "-ss", str(start), "-to", str(end), "-i", src,
-        "-vf", ",".join(frame_filter(seg)),
+        "ffmpeg", "-y", "-v", "error", "-ss", str(start), "-t", str(end - start), "-i", src,
+        "-vf", ",".join(frame_filter(seg, grade)),
         "-an", "-c:v", "libx264", "-preset", "medium", "-crf", "18",
         "-pix_fmt", "yuv420p", "-r", str(FPS), out_path,
     ])
@@ -79,6 +89,9 @@ def main():
         edit = json.load(f)
     raw_dir = edit.get("raw_dir", "reels/raw")
     output = edit.get("output", "reels/out/reel.mp4")
+    grade = edit.get("grade", "dark")
+    if grade not in GRADES:
+        raise SystemExit(f"Unknown grade {grade!r}; use one of {', '.join(GRADES)}")
     os.makedirs(os.path.dirname(output), exist_ok=True)
 
     with tempfile.TemporaryDirectory() as tmp:
@@ -86,7 +99,7 @@ def main():
         for i, seg in enumerate(edit["segments"]):
             p = os.path.join(tmp, f"seg{i:03d}.mp4")
             print(f"[{i + 1}/{len(edit['segments'])}] {seg['file']} {seg['start']}-{seg['end']}s")
-            render_segment(seg, raw_dir, p)
+            render_segment(seg, raw_dir, p, grade)
             seg_files.append(p)
 
         listing = os.path.join(tmp, "list.txt")

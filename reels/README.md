@@ -1,7 +1,7 @@
 # Reels
 
 Scripted reel pipeline (ffmpeg). Produces a 1080x1920, 30fps, **silent** MP4
-with a dark grade and optional slow zoom-ins. No on-screen text, and footage plays at real speed.
+with a dark, light or no colour grade and optional slow zoom-ins. No on-screen text, and footage plays at real speed.
 Add the music in Instagram using its sounds.
 
 1. Drop raw clips in `reels/raw/` (git-ignored).

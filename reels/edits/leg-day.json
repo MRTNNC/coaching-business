@@ -1,12 +1,17 @@
 {
   "output": "reels/out/leg-day.mp4",
   "raw_dir": "reels/raw",
+  "grade": "light",
   "segments": [
-    {"file": "squat.mp4",     "start": 0.0, "end": 2.0, "punch_in": true},
-    {"file": "squat.mp4",     "start": 3.0, "end": 5.5},
-    {"file": "legpress.mp4",  "start": 0.5, "end": 2.5},
-    {"file": "rdl.mp4",       "start": 1.0, "end": 3.0},
-    {"file": "extension.mp4", "start": 0.0, "end": 2.0},
-    {"file": "pump.mp4",      "start": 0.0, "end": 2.5, "punch_in": true}
+    {"file": "IMG_8161.MOV",    "start": 62,   "end": 67,   "punch_in": true},
+    {"file": "IMG_8145.MOV",    "start": 40,   "end": 45},
+    {"file": "IMG_8146.MOV",    "start": 18,   "end": 23},
+    {"file": "IMG_8149-V2.mov", "start": 10,   "end": 15},
+    {"file": "IMG_8159.MOV",    "start": 44,   "end": 49},
+    {"file": "IMG_8161.MOV",    "start": 30,   "end": 35},
+    {"file": "IMG_8163.MOV",    "start": 12,   "end": 17},
+    {"file": "IMG_8164.MOV",    "start": 10.8, "end": 15.6},
+    {"file": "IMG_8165.MOV",    "start": 6,    "end": 11},
+    {"file": "IMG_8165.MOV",    "start": 32,   "end": 38,   "punch_in": true}
   ]
 }
