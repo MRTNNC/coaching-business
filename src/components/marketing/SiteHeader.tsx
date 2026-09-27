@@ -43,12 +43,6 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/login"
-            className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition hover:opacity-90"
-          >
-            Client login
-          </Link>
         </nav>
 
         <button
@@ -96,13 +90,6 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/login"
-            onClick={() => setOpen(false)}
-            className="mt-2 rounded-full bg-accent px-4 py-2 text-center text-sm font-medium text-accent-foreground transition hover:opacity-90"
-          >
-            Client login
-          </Link>
         </nav>
       )}
     </header>
