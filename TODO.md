@@ -5,7 +5,8 @@
 - [ ] Review the Apex Coaching website for ideas on site structure (page order, pricing layout, testimonials)
 - [ ] Add a coaching submission form — build on-site (extends the pre-call intake form) rather than Google Forms; waiting on the Word document of questions
 - [ ] Change the signup section to point at the submission form, with "Got questions? Book a call" as the secondary option
-- [ ] Add a shop (nose strips / merch / recipes / training plans) using **Payhip**, replacing the Merch "coming soon" page
+- [x] Add a shop page using **Payhip** (https://payhip.com/ArzunoFitness), replacing the Merch "coming soon" page
+- [ ] Link the shop's category cards to individual Payhip products once they're listed
 - [ ] Add the TikTok link in the footer (needs handle)
 - [ ] Set up the Cal.com Workflow that emails the intake form link after booking
 
