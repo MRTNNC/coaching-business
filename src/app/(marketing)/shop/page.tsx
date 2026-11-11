@@ -1,34 +1,40 @@
+import Link from "next/link";
 import type { Metadata } from "next";
-
-const storeUrl = "https://payhip.com/ArzunoFitness";
 
 const categories = [
   {
-    name: "Recipes",
+    name: "Recipe packs",
     description: "High-protein recipes that fit a normal working week.",
+    href: "https://payhip.com/ArzunoFitness/collection/recipe-packs",
   },
   {
     name: "Training plans",
     description: "Structured programmes and templates to run on your own.",
+    href: "https://payhip.com/ArzunoFitness/collection/training-plans",
+  },
+  {
+    name: "Stretching & mobility plans",
+    description: "Routines to move better, recover faster and stay injury-free.",
+    href: "https://payhip.com/ArzunoFitness/collection/stretching-mobility-plans",
   },
   {
     name: "Merch",
-    description: "Arzuno clothing and accessories.",
-  },
-  {
-    name: "Nose strips",
-    description: "Nasal strips for training, sleep and recovery.",
+    description: "Arzuno clothing, accessories and nasal strips.",
+    href: "/shop/merch",
   },
 ];
 
 export const metadata: Metadata = {
   title: "Shop",
   description:
-    "Recipes, training plans, merch and nose strips from Arzuno Coaching.",
+    "Recipe packs, training plans, stretching and mobility plans and merch from Arzuno Coaching.",
   alternates: {
     canonical: "/shop",
   },
 };
+
+const cardClass =
+  "flex flex-col rounded-2xl border border-black/10 p-6 transition hover:border-accent/60 dark:border-white/15";
 
 export default function ShopPage() {
   return (
@@ -40,34 +46,35 @@ export default function ShopPage() {
       </p>
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2">
-        {categories.map((category) => (
-          <a
-            key={category.name}
-            href={storeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-col rounded-2xl border border-black/10 p-6 transition hover:border-accent/60 dark:border-white/15"
-          >
-            <h2 className="text-xl font-semibold">{category.name}</h2>
-            <p className="mt-2 flex-1 text-foreground/70">
-              {category.description}
-            </p>
-            <span className="mt-4 text-sm font-medium text-accent">
-              Browse &rarr;
-            </span>
-          </a>
-        ))}
-      </div>
+        {categories.map((category) => {
+          const content = (
+            <>
+              <h2 className="text-xl font-semibold">{category.name}</h2>
+              <p className="mt-2 flex-1 text-foreground/70">
+                {category.description}
+              </p>
+              <span className="mt-4 text-sm font-medium text-accent">
+                Browse &rarr;
+              </span>
+            </>
+          );
 
-      <div className="mt-14 flex justify-center">
-        <a
-          href={storeUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-accent-foreground transition hover:opacity-90"
-        >
-          Visit the shop
-        </a>
+          return category.href.startsWith("/") ? (
+            <Link key={category.name} href={category.href} className={cardClass}>
+              {content}
+            </Link>
+          ) : (
+            <a
+              key={category.name}
+              href={category.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cardClass}
+            >
+              {content}
+            </a>
+          );
+        })}
       </div>
     </section>
   );

@@ -7,7 +7,8 @@
 - [x] Pricing cards: "Submit coaching application" + "Need more info? Book a call"
 - [ ] Run `supabase/migrations/0006_pricing_sections.sql` in Supabase after merging the new pricing
 - [x] Add a shop page using **Payhip** (https://payhip.com/ArzunoFitness), replacing the Merch "coming soon" page
-- [ ] Link the shop's category cards to individual Payhip products once they're listed
+- [x] Link the shop cards to the Payhip collections (recipe packs, training plans, stretching & mobility)
+- [ ] Merch page (clothing, accessories, nasal strips): send product details and set up checkout (Payhip physical products), replacing the "Coming soon" page
 - [ ] Add the TikTok link in the footer (needs handle)
 - [ ] Optional: set up a Cal.com Workflow that emails the `/apply` link to people after they book a call
 
