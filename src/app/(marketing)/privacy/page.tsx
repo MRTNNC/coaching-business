@@ -154,6 +154,10 @@ export default function PrivacyPolicyPage() {
               PayPal.
             </li>
             <li>Mailchimp: marketing emails, if you&apos;ve opted in.</li>
+            <li>
+              WhatsApp and the 1Fit coaching app: sending check-ins,
+              progress photos, plans and messages during coaching.
+            </li>
           </ul>
           <p className="mt-2">
             Some of these providers are based in, or store data in, the
@@ -168,7 +172,8 @@ export default function PrivacyPolicyPage() {
           <p className="mt-2">
             Your application, check-ins, photos, and plans are stored
             securely and only I can access them. No other client can see
-            your data.
+            your data. Messages and photos sent over WhatsApp are end-to-end
+            encrypted.
           </p>
         </div>
 
