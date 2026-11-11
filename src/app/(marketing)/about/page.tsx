@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Meet Martin Cull — FP&A manager by day, preparing for a bodybuilding show in September 2027, and 1:1 coach for working professionals and aspiring bodybuilders.",
+    "Meet Martin Cull - FP&A manager by day, preparing for a bodybuilding show in September 2027, and 1:1 coach for working professionals and aspiring bodybuilders.",
   alternates: {
     canonical: "/about",
   },

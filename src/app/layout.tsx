@@ -16,12 +16,12 @@ const geistMono = Geist_Mono({
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://arzuno-coaching.com";
 const siteName = "Arzuno Coaching";
 const defaultDescription =
-  "1:1 online coaching for working professionals and aspiring bodybuilders — personalised training plans, nutrition guidance, and weekly check-ins that fit around your life.";
+  "1:1 online coaching for working professionals and aspiring bodybuilders - personalised training plans, nutrition guidance, and weekly check-ins that fit around your life.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteName} — 1:1 Online Fitness & Nutrition Coaching`,
+    default: `${siteName} - 1:1 Online Fitness & Nutrition Coaching`,
     template: `%s | ${siteName}`,
   },
   description: defaultDescription,
@@ -31,13 +31,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName,
-    title: `${siteName} — 1:1 Online Fitness & Nutrition Coaching`,
+    title: `${siteName} - 1:1 Online Fitness & Nutrition Coaching`,
     description: defaultDescription,
     url: "/",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteName} — 1:1 Online Fitness & Nutrition Coaching`,
+    title: `${siteName} - 1:1 Online Fitness & Nutrition Coaching`,
     description: defaultDescription,
   },
   verification: {

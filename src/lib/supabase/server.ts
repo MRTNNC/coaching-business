@@ -1,7 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-// For use in Server Components, Server Actions, and Route Handlers.
+// For use in Server Components and Route Handlers (public reads, e.g. the
+// pricing packages).
 export async function createClient() {
   const cookieStore = await cookies();
 
@@ -20,7 +21,7 @@ export async function createClient() {
             );
           } catch {
             // Called from a Server Component with no way to set cookies.
-            // Safe to ignore since middleware refreshes the session.
+            // Safe to ignore: the site has no logged-in sessions.
           }
         },
       },

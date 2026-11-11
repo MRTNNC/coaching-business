@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Merch",
-  description: "Arzuno Coaching merchandise and nasal strips — coming soon.",
+  description: "Arzuno Coaching merchandise and nasal strips - coming soon.",
   alternates: {
     canonical: "/shop/merch",
   },

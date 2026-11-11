@@ -32,8 +32,8 @@ export default function PrivacyPolicyPage() {
             coaching, including training and nutrition guidance. I&apos;m the
             data controller for the personal data described in this policy,
             which explains what I collect through this website, the coaching
-            application form and the client portal, why I collect it, and
-            what rights you have over it.
+            application form and coaching itself, why I collect it, and what
+            rights you have over it.
           </p>
           <p className="mt-2">
             Coaching is currently only available to adults aged 18 and over,
@@ -73,14 +73,14 @@ export default function PrivacyPolicyPage() {
           </p>
           <ul className="mt-2 list-disc pl-5">
             <li>
-              Check-in data you submit weekly: bodyweight, steps, hydration,
-              waist measurement, and (only if you choose to provide them)
-              blood pressure and blood glucose readings.
+              Check-in information you send me: bodyweight, steps,
+              measurements, and (only if you choose to provide them) other
+              health readings.
             </li>
-            <li>Progress photos you upload as part of a check-in.</li>
+            <li>Progress photos you send as part of a check-in.</li>
             <li>
-              Answers to training, nutrition, and lifestyle questions in the
-              check-in form.
+              Your answers to training, nutrition, and lifestyle questions in
+              check-ins.
             </li>
             <li>
               Coaching plans, comments, and any voice notes I send you as
@@ -146,7 +146,6 @@ export default function PrivacyPolicyPage() {
             data on my behalf:
           </p>
           <ul className="mt-2 list-disc pl-5">
-            <li>Supabase: database and file storage for the client portal.</li>
             <li>Vercel: website hosting and privacy-friendly analytics.</li>
             <li>Resend: sending application and enquiry emails to me.</li>
             <li>Cal.com: booking calls.</li>
@@ -167,9 +166,9 @@ export default function PrivacyPolicyPage() {
         <div>
           <h2 className={headingClass}>How I store it</h2>
           <p className="mt-2">
-            Your check-ins, photos, and plans are stored securely, and access
-            is restricted so that only you and I can view them. No other
-            client can see your data, and vice versa.
+            Your application, check-ins, photos, and plans are stored
+            securely and only I can access them. No other client can see
+            your data.
           </p>
         </div>
 
@@ -201,9 +200,8 @@ export default function PrivacyPolicyPage() {
         <div>
           <h2 className={headingClass}>Cookies</h2>
           <p className="mt-2">
-            This site only uses strictly necessary cookies, for example to
-            keep you logged in to the client portal. The analytics I use
-            don&apos;t use cookies, and I don&apos;t use tracking or
+            This site doesn&apos;t set any cookies of its own. The analytics
+            I use don&apos;t use cookies, and I don&apos;t use tracking or
             advertising cookies. The booking calendar and shop are provided
             by Cal.com and Payhip, which may set their own cookies needed
             for them to work.

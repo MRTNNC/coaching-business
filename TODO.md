@@ -15,10 +15,10 @@
 - [x] Add an FAQ page (`/faq`)
 - [x] Send a test application and check the email arrives
 - [ ] Optional: add a refund question for digital shop products to the FAQ
-- [ ] Optional: save applications to the admin portal as well as emailing them
 
 ## Housekeeping
 - [x] Verify the domain in Resend and Mailchimp
 - [x] Clear test accounts and check-ins from Supabase
-- [ ] Rotate the Supabase service-role key and Resend API key
-- [ ] Optional: switch client invites to an email code instead of a link
+- [x] Remove the client portal and admin area
+- [ ] Optional: delete the old portal tables and storage buckets in Supabase (`profiles`, `checkins`, `checkin_photos`, `comments`, `plans`, `checkin-photos`, `voice-notes`) and turn off Supabase Auth sign-ups
+- [ ] Rotate the Resend API key, and the Supabase service-role key (no longer used by the site; remove `SUPABASE_SERVICE_ROLE_KEY` from Vercel)

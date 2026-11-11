@@ -51,7 +51,7 @@ export function InquiryModal({
       >
         {status === "sent" ? (
           <>
-            <h2 className="text-lg font-semibold">Thanks — message sent</h2>
+            <h2 className="text-lg font-semibold">Thanks - message sent</h2>
             <p className="mt-2 text-sm text-foreground/70">
               We&apos;ll get back to you to arrange {service.toLowerCase()}.
             </p>
