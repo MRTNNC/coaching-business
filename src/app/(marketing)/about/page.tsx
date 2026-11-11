@@ -19,15 +19,22 @@ export default function AboutPage() {
       <div className="mt-10 flex flex-col gap-10">
         <div>
           <p className="leading-relaxed text-foreground/80">
-            Hi, my name is Martin, and I&apos;m an FP&amp;A manager by day,
-            working on budgets in the hundreds of millions. Outside work, I&apos;m preparing for a
-            bodybuilding show in September 2027.
+            Hi, my name is Martin. By day I&apos;m an FP&amp;A manager,
+            working on budgets in the hundreds of millions, and in my spare
+            time I&apos;m preparing to compete in bodybuilding, with my first
+            show in September 2027.
           </p>
           <p className="mt-3 leading-relaxed text-foreground/80">
             I&apos;ve been training for years, and I treat it the way I treat
             my job: track everything, look at what the numbers say, and
             adjust. That&apos;s how I&apos;ve built my physique alongside a
-            full-time career, and it&apos;s how I coach.
+            full-time career, and it&apos;s exactly what I help my clients
+            do.
+          </p>
+          <p className="mt-3 leading-relaxed text-foreground/80">
+            Because I know how valuable your time is, I keep my client
+            numbers small and review every check-in personally, so you
+            always get my full attention.
           </p>
         </div>
 
