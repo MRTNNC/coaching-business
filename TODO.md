@@ -1,14 +1,15 @@
 # To-do
 
 ## Site
-- [ ] Merge the About page update ([PR #2](https://github.com/MRTNNC/coaching-business/pull/2)) so the new bio goes live
+- [x] Merge the About page update ([PR #2](https://github.com/MRTNNC/coaching-business/pull/2)) so the new bio goes live
 - [ ] Review the Apex Coaching website for ideas on site structure (page order, pricing layout, testimonials)
-- [ ] Add a coaching submission form — build on-site (extends the pre-call intake form) rather than Google Forms; waiting on the Word document of questions
-- [ ] Change the signup section to point at the submission form, with "Got questions? Book a call" as the secondary option
+- [x] Add a coaching application form at `/apply` (from the Arzuno Client Intake Form PDF), emailed to the coach
+- [x] Pricing cards: "Submit coaching application" + "Need more info? Book a call"
+- [ ] Run `supabase/migrations/0006_pricing_sections.sql` in Supabase after merging the new pricing
 - [x] Add a shop page using **Payhip** (https://payhip.com/ArzunoFitness), replacing the Merch "coming soon" page
 - [ ] Link the shop's category cards to individual Payhip products once they're listed
 - [ ] Add the TikTok link in the footer (needs handle)
-- [ ] Set up the Cal.com Workflow that emails the intake form link after booking
+- [ ] Optional: set up a Cal.com Workflow that emails the `/apply` link to people after they book a call
 
 ## Housekeeping
 - [ ] Verify a domain in Resend so emails can reach people other than the coach
