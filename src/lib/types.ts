@@ -118,4 +118,5 @@ export interface Package {
   stripe_price_id: string | null;
   sort_order: number;
   is_addon: boolean;
+  category: string | null;
 }
