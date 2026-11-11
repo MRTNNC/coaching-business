@@ -69,15 +69,23 @@ export default function HomePage() {
             Ready to get started?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-foreground/70">
-            Book a free intro call and we&apos;ll figure out the right plan
-            for your goals.
+            Submit a coaching application and I&apos;ll get back to you, or
+            book a free call if you&apos;d like to talk it through first.
           </p>
-          <Link
-            href="/booking"
-            className="mt-8 inline-block rounded-full bg-accent px-6 py-3 text-sm font-medium text-accent-foreground transition hover:opacity-90"
-          >
-            Book a free call
-          </Link>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link
+              href="/apply"
+              className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-accent-foreground transition hover:opacity-90"
+            >
+              Submit coaching application
+            </Link>
+            <Link
+              href="/booking"
+              className="rounded-full border border-white/20 px-6 py-3 text-sm font-medium transition hover:bg-white/5"
+            >
+              Need more info? Book a call
+            </Link>
+          </div>
         </div>
       </section>
     </>
