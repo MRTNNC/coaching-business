@@ -47,7 +47,7 @@ export default function HomePage() {
 
       <section className="border-t border-black/10 dark:border-white/10">
         <div className="mx-auto max-w-5xl px-6 py-20">
-          <h2 className="text-2xl font-semibold tracking-tight">
+          <h2 className="text-center text-2xl font-semibold tracking-tight">
             How coaching works
           </h2>
           <div className="mt-10 grid gap-8 sm:grid-cols-3">
