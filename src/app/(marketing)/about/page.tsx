@@ -53,7 +53,7 @@ export default function AboutPage() {
             width={1080}
             height={1350}
             sizes="(min-width: 768px) 448px, 100vw"
-            className="mt-5 w-full max-w-md rounded-2xl border border-white/10"
+            className="mx-auto mt-5 w-full max-w-md rounded-2xl border border-white/10"
           />
         </div>
 
