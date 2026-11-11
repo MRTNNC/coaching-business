@@ -12,6 +12,9 @@
 - [ ] Add the TikTok link in the footer (needs handle)
 - [ ] Optional: set up a Cal.com Workflow that emails the `/apply` link to people after they book a call
 
+- [x] Home page CTA: "Submit coaching application" + "Need more info? Book a call"
+- [x] Add an FAQ page (`/faq`) — review the answers
+
 ## Housekeeping
 - [ ] Verify a domain in Resend so emails can reach people other than the coach
 - [ ] Clear test accounts and check-ins from Supabase before real clients use the portal
