@@ -55,7 +55,10 @@ const organizationJsonLd = {
   description: defaultDescription,
   email: "m.cull@arzuno.co.uk",
   areaServed: "GB",
-  sameAs: ["https://www.instagram.com/martin_cull_fit/"],
+  sameAs: [
+    "https://www.instagram.com/martin_cull_fit/",
+    "https://www.tiktok.com/@mcull_fit",
+  ],
   founder: {
     "@type": "Person",
     name: "Martin Cull",
