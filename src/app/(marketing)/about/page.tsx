@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Meet Martin Cull - FP&A manager by day, preparing for a bodybuilding show in September 2027, and 1:1 coach for working professionals and aspiring bodybuilders.",
+    "Meet Martin Cull, a 1:1 coach for busy professionals and aspiring bodybuilders, fitting serious training around a full-time job ahead of a first bodybuilding show in September 2027.",
   alternates: {
     canonical: "/about",
   },
@@ -23,10 +23,12 @@ export default function AboutPage() {
       <div className="mt-10 flex flex-col gap-10">
         <div>
           <p className="leading-relaxed text-foreground/80">
-            Hi, my name is Martin. By day I&apos;m an FP&amp;A manager,
-            working on budgets in the hundreds of millions, and in my spare
-            time I&apos;m preparing to compete in bodybuilding, with my first
-            show in September 2027.
+            Hi, my name is Martin, and I&apos;m a 1:1 coach for busy
+            professionals and aspiring bodybuilders. I&apos;ve worked as an
+            FP&amp;A manager, managing budgets in the hundreds of millions,
+            while also coaching and building my own physique, so I know what
+            it takes to balance a busy life with your health and fitness
+            goals.
           </p>
           <p className="mt-3 leading-relaxed text-foreground/80">
             I&apos;ve been training for years, and I treat it the way I treat
