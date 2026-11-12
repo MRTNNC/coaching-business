@@ -10,6 +10,11 @@ export const metadata: Metadata = {
   },
 };
 
+const socialLinks = [
+  { label: "Instagram", href: "https://www.instagram.com/mcull_fit/" },
+  { label: "TikTok", href: "https://www.tiktok.com/@mcull_fit" },
+];
+
 export default function AboutPage() {
   return (
     <section className="mx-auto max-w-3xl px-6 py-20">
@@ -61,6 +66,26 @@ export default function AboutPage() {
             <li>Regular check-ins to review progress and make changes</li>
             <li>Straight answers</li>
           </ul>
+        </div>
+      </div>
+
+      <div className="mt-14 text-center">
+        <p className="text-foreground/70">
+          I share training, food and prep updates most weeks. Come and say
+          hello.
+        </p>
+        <div className="mt-4 flex justify-center gap-3">
+          {socialLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-white/20 px-5 py-2 text-sm font-medium transition hover:bg-white/5"
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
       </div>
 
