@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -46,22 +45,6 @@ export default function AboutPage() {
             many hours in the week. I coach working professionals and
             aspiring bodybuilders who want a plan built around that.
           </p>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-semibold">My transformation</h2>
-          <p className="mt-3 leading-relaxed text-foreground/80">
-            18 months, using the same approach I use with clients: train
-            consistently, track the numbers, and adjust.
-          </p>
-          <Image
-            src="/images/transformation.webp"
-            alt="Martin's before and after transformation"
-            width={1080}
-            height={1350}
-            sizes="(min-width: 768px) 448px, 100vw"
-            className="mx-auto mt-5 w-full max-w-md rounded-2xl border border-white/10"
-          />
         </div>
 
         <div>

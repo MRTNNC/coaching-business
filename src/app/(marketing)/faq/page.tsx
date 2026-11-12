@@ -90,6 +90,11 @@ const faqGroups = [
         answer:
           "No judgement. Honesty is the best policy: tell me what happened so we can make the right adjustments, get you back on track, and change the plan if it needs to fit your life better.",
       },
+      {
+        question: "How quickly do you reply to messages and check-ins?",
+        answer:
+          "Within 24 hours on weekdays. Anything sent at the weekend is picked up on the next working day.",
+      },
     ],
   },
   {
