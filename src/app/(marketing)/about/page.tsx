@@ -71,8 +71,8 @@ export default function AboutPage() {
 
       <div className="mt-14 text-center">
         <p className="text-foreground/70">
-          I share training, food and prep updates most weeks. Come and say
-          hello.
+          Come and follow along. I share my training, meals and prep most
+          weeks. Got a question? Drop me a message, I always reply.
         </p>
         <div className="mt-4 flex justify-center gap-3">
           {socialLinks.map((link) => (
